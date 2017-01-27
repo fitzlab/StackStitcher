@@ -1,0 +1,22 @@
+<component name="libraryTable">
+  <library name="edu_mines_jtk">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/edu_mines_jtk.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/fiji-lib.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/Fiji_Plugins.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ij.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/imglib-algorithms.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/imglib-ij.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/imglib.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/JTattoo.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/loci_tools.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/mpicbg.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/Multi_Thresholder.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/Stitching_.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/Multi_Thresholder.jar!/" />
+    </SOURCES>
+  </library>
+</component>

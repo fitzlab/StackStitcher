@@ -1,0 +1,81 @@
+<html>
+
+<body>
+
+<div style="width:900px;">
+
+<p><h2>StackStitcher</h2></p>
+
+<p>StackStitcher stitches images acquired by confocal microscopes.</p>
+
+<p>In confocal microscopy, large images are acquired by tiling many small images together. Sometimes, the acquisition software is sufficient to produce a tiled image. But errors such as stage drift or inaccurate coordinates may need the help of stitching software. That's what StackStitcher is!</p>
+
+<p><h3>Download</h3></p>
+
+<a href="content/StackStitcher.zip">StackStitcher</a>
+
+<p>Download and extract StackStitcher. Open a command line window, cd to the extracted directory, and type: </p>
+<p><pre>java -Xmx1G -jar StackStitcher.jar</pre></p>
+
+<br />
+<p><h3>Python scripts</h3></p>
+
+<p>These scripts prepare data for use with StackStitcher.</p>
+
+<p><a href="content/leicaRename.zip">leicaRename.py</a> will fix the names of tifs from Leica microscopes so that they can be used with StackStitcher.</p>
+
+<p><a href="content/generateCoords.zip">generateCoords.py</a> allows you to stitch images quickly when there are no scanning errors that need to be corrected.</p>
+
+<br />
+<p><h3>Preparing Data</h3></p>
+
+<p>StackStitcher operates on directories containing single-page .tif images, and requires them to be in order. Each directory contains a single color channel. </p>
+
+<p>To export a well-formed directory from a Zeiss confocal, use the "export single channel image sequence" option. You will need to be in Zen's black edition; blue does not have this option.</p>
+
+<p>If you have a directory of images acquired from a Leica confocal, run the leicaRename.py script. It will move the images to the appropriate directories and fix their order for use with StackStitcher.</p>
+
+<br />
+<p><h3>Stitching Setup</h3></p>
+
+<p><img src="ui.png"></p>
+<br />
+
+<p>Enter a directory location containing the images you want to stitch in the "Directory of Tifs to Stitch" field. If you don't have data yet, <a href="test_dataset.zip">try our example dataset</a>.</p>
+
+<p>If your data has more than one color channel, each channel must go into its own directory. Put the best-looking channel into the topmost field. The other channels go into the "Apply the calculated stitch..." fields.</p>
+
+<p>The images in the directory are assumed to be in order. That is, all the images for z=0 come first, followed by the images for z=1, and so on. Further, within a z-position, the images should be ordered so that the top-left image is first, followed by the image immediately to the right, and so on. When the second row is reached, images may continue left-to-right, or they may switch to be right-to-left (bidirectional mode). Determine if your dataset is left-to-right or bidirectional, and choose the appropriate option in StackStitcher.</p>
+
+<p>Enter the width and height of your grid. The grid will appear. If you did not acquire a complete square, and thus have some missing images, you can X out the missing images by clicking on the grid.</p>
+
+<p>If you're not sure what your grid size is, you may be able to look it up. For Zeiss confocals, the Zen software will show you a rough stitch, and you can just count the tiles across and down. Leica confocals generate an XML file, e.g. "Experiment_TileScan_001.xml" -- look for the "max(fieldX)" and "max(fieldY)" entries. Add 1 to each.</p>
+
+<p><h3>Stitching Methods</h3></p>
+
+<p><b>Stitch By Fourier Phase</b> is the default stitching mode. It assumes that there is some overlap between adjacent images, typically 10%-20%. Based on that overlap, it computes the best position for each image.</p>
+
+<p>The "Peaks to Check" parameter will improve stitch results at cost of more compute time. If you compute a stitch, and a few tiles are misplaced, try increasing this number.</p>
+
+<p>The "Z-information" parameter controls how the Z-projection step works. To save on compute time, the stitch is typically computed using a Z-projection of each XY position. Standard deviation projection is the default; max and mean projections are available as well. 
+
+<p>To skip Z-projection and make StackStitcher evaluate every single Z-position independently, choose "Use Each Slice". In this case, each adjacent pair of frames is evaluated at every Z-position, and the best stitch is chosen. So, this may give better results, but will take much longer.</p>
+
+<p><b>Stitch By Reslice</b></p> is method that may work well on images where there is no overlap. It's a bit "beta", but it might get you out of trouble if you forgot to acquire images with overlap.</p>
+
+<p>Rather than considering each pair of images in the original dataset, Stitch By Reslice uses vertical slices through the image tiles. It then matches the facing sides of each tile. <a href="files/dice.jpg">Imagine pushing the 5's together on this pair of dice</a>, and you'll have the idea.</p>
+
+<p><b>Apply Known Coordinates</b> lets you specify the coordinates where each tile will land yourself, instead of having StackStitcher calculate them. </p> 
+
+<p>Apply Known Coordinates is useful for editing an existing stitch. When StackStitcher runs, it generates a coords.txt file along with the stitched images. If you want to adjust a few tiles in the result, edit the coords.txt file, and apply it to your input images.</p>
+
+<p>If you want to generate an initial stitch with no algorithmic correction involved, try the "generateCoords.py" script. It will make a coords.txt file that simply lays out the images next to each other, and you can adjust from there. It may be all you need in cases where there were no oddities during acquisition.</p>
+
+<p><h3>About:</h3></p>
+<p>StackStitcher v1.0 released July 2, 2016.</p>
+
+<p>Created by <a href="http://www.maxplanckflorida.org/fitzpatricklab/theo-walker.html">Theo Walker</a> (<a href="mailto:theo.walker@mpfi.org">Email</a>).</p>
+
+</div>
+</body>
+</html>
